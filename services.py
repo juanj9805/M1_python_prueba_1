@@ -1,48 +1,30 @@
-from helpers import principal_menu, date_generator, ID_generator, custom_input_value
-import datetime
-
-books = [
-{'book_ID': '7ce5438a-8cd7-42af-af8d-240bbf619518', 'book_title': 'the prince', 'book_author': 'nicolas machiavelo', 'book_category': 'politics', 'book_price': 80000, 'book_stock': 30},
-{'book_ID': '995522c8-bad2-410f-898c-c165b08b48aa', 'book_title': 'clean code', 'book_author': 'bob martin', 'book_category': 'software', 'book_price': 180000, 'book_stock': 15},
-{'book_ID': '2a819753-01a5-4bc9-ad16-1c4fdf986803', 'book_title': 'bible', 'book_author': 'pedro', 'book_category': 'religion', 'book_price': 110000, 'book_stock': 33},
-{'book_ID': '57a0a28b-6a28-4571-a84c-b961f9fc7a46', 'book_title': 'data structures and algorithms', 'book_author': 'susan cooper', 'book_category': 'software', 'book_price': 70000, 'book_stock': 12},
-{'book_ID': 'eedd9c37-8504-443a-8461-2e33089f7b0f', 'book_title': 'atomic habits', 'book_author': 'juan', 'book_category': 'wellness', 'book_price': 95000, 'book_stock': 3}
-]
-
-sales = [
-{'sale_ID': '8db297b1-c857-4aac-a5bf-1f2673b8de50', 'user_ID': '23', 'ID_book': '2a819753-01a5-4bc9-ad16-1c4fdf986803', 'quantity_product': 3, 'date': '2025-11-24 18:26:37.152528', 'total_price': 330000},
-{'sale_ID': '8db297b1-c857-4aac-a5bf-1f2673b8de51', 'user_ID': '32', 'ID_book': '2a819753-01a5-4bc9-ad16-1c4fdf986803', 'quantity_product': 2, 'date': '2025-11-24 18:26:37.152528', 'total_price': 220000},
-{'sale_ID': '8db297b1-c857-4aac-a5bf-1f2673b8de52', 'user_ID': '1', 'ID_book': '995522c8-bad2-410f-898c-c165b08b48aa', 'quantity_product': 2, 'date': '2025-11-24 18:26:37.152528', 'total_price': 360000},
-]
-
-TAX = 0.17
-operation_cost = 0.33
+from helpers import  date_generator, ID_generator, custom_input_value
 
 # Inventory managament
 
 def register_product (products_list):
-    product_info = {
-                "book_ID" : ID_generator(),
-                "book_title" : custom_input_value(str,"book title"),
-                "book_author" : custom_input_value(str,"book author"),
-                "book_category" : custom_input_value(str,"book category"),
-                "book_price" : custom_input_value(float,"book price"),
-                "book_stock" : custom_input_value(int,"book stock"),
-            }
-    products_list.append(product_info)
+        product_info = {
+                    "book_ID" : ID_generator(),
+                    "book_title" : custom_input_value(str,"Book title: "),
+                    "book_author" : custom_input_value(str,"Book author: "),
+                    "book_category" : custom_input_value(str,"Book category: "),
+                    "book_price" : custom_input_value(float,"Book price: "),
+                    "book_stock" : custom_input_value(int,"Book stock: "),
+                }
+        products_list.append(product_info)
 
 def show_products_inventory (products_list):
     print(f"Inventory stock:\n{products_list}")
 
 def search_product_by_name (products_list):
-    search_book = custom_input_value(str,"product to search by name: ")
+    search_book = custom_input_value(str,"product to search by book title: ")
     for product in products_list:
         if search_book == product["book_title"]:
             print(f"Product found:\n{product}")
             return product
 
 def search_product_by_ID (products_list):
-    search_book = custom_input_value(str,"Register the ID: ")
+    search_book = custom_input_value(str,"Register the Book ID: ")
     for product in products_list:
         if search_book == product["book_ID"]:
             print(f"Product found:\n{product}")
@@ -53,7 +35,7 @@ def update_product (products_list):
     for product in products_list:
         print(product)
         if product_to_update["book_title"] == product["book_title"]:
-            new_name = custom_input_value(str,"new name: ")
+            new_name = custom_input_value(str,"New title for this book: ")
             product["book_title"] = new_name
             return product
 
@@ -69,14 +51,14 @@ def delete_product (products_list):
 
 def register_sale (sales_list,products_list):
     product_to_sale = search_product_by_name(products_list)
-    product_quantity = custom_input_value(int,"quantity product")
+    product_quantity = custom_input_value(int,"Enter the product quantity to sell: ")
     total_price = product_quantity * product_to_sale["book_price"]
     if product_to_sale["book_stock"] < product_quantity:
-        return print(f"{product_to_sale["book_title"]} stock insuficient, there are just {product_to_sale["book_stock"]} books of them")
+        return print(f'{product_to_sale["book_title"]} stock insuficient, there are just {product_to_sale["book_stock"]} books of them')
     
     sale_info = {
                 "sale_ID" : ID_generator(),
-                "user_ID" : custom_input_value(str,"user id"),
+                "user_ID" : custom_input_value(str,"Enter user ID: "),
                 "ID_book" : product_to_sale["book_ID"],
                 "quantity_product" : product_quantity,
                 "date" : date_generator(),
@@ -105,7 +87,9 @@ def products_best_seller (sales_list):
 
 def products_major_sales_by_author (sales_list):
     best_sell = products_best_seller(sales_list)
-    book_info = search_product_by_ID(books,best_sell["ID_best_seller"])
+    print(best_sell)
+    book_info = search_product_by_ID(products_list)
+    print(book_info)
     author_seller = book_info["book_author"]
     return author_seller
 
@@ -116,9 +100,8 @@ def products_raw_income (sales_list):
     return raw_income
 
 def products_net_income (sales_list):
+    TAX = 0.17
+    operation_cost = 0.33
     net_income = products_raw_income(sales_list)
     net_income -=  (operation_cost * net_income) + (net_income * TAX)
     return net_income
-
-# 4. Validaciones avanzadas
-# • Validar entradas (números positivos, formatos correctos, campos obligatorios).

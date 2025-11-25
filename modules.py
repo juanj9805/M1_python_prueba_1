@@ -1,5 +1,5 @@
 from services import register_product, show_products_inventory, search_product_by_name, search_product_by_ID, update_product, delete_product, register_sale, show_sales, products_best_seller, products_major_sales_by_author, products_raw_income, products_net_income
-from helpers import  principal_menu, options_menu, inventory_management_menu, sales_management_menu, report_management_menu
+from helpers import   options_menu, inventory_management_menu, sales_management_menu, report_management_menu
 
 def inventory_management_module (products_list):
     follow = True
@@ -52,5 +52,3 @@ def reports_management_module (sales_list):
             print(products_net_income(sales_list))
         elif reports_management_choice == 5:
             follow = False
-
-

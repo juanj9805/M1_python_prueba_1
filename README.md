@@ -86,4 +86,5 @@ And With these IDS then I create relation, and if I need to get the information 
 'date':
 'total_price'
 ]:
+
 # M1_python_prueba_1
