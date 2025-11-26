@@ -53,8 +53,21 @@ def date_generator ():
 def ID_generator ():
     return str(uuid.uuid4())
 
-def custom_input_value (data_type, msg):
-    try:
-        return data_type(input(f"{msg}"))
-    except ValueError:
-        return print(f"Data type error")
+def str_input(msg):
+    text = input(msg).strip()
+    return text.lower()
+
+def int_input(msg):
+    while True:
+            value = input(msg)
+            if value.isdigit():
+                return int(value)
+            else:
+                print("Please enter a valid number.")
+
+def float_input(msg):
+    while True:
+        try:
+            return float(input(msg))
+        except ValueError:
+            print("Please enter a valid number.")

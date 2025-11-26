@@ -38,14 +38,14 @@ def sales_management_module (sales_list, products_list):
         elif sales_management_choice == 3:
             follow = False
 
-def reports_management_module (sales_list):
+def reports_management_module (sales_list, products_list):
     follow = True
     while follow:
         reports_management_choice = report_management_menu()
         if reports_management_choice == 1:
             print(products_best_seller(sales_list))
         elif reports_management_choice == 2:
-            print(products_major_sales_by_author(sales_list))
+            print(products_major_sales_by_author(sales_list,products_list))
         elif reports_management_choice == 3:
             print(products_raw_income(sales_list))
         elif reports_management_choice == 4:

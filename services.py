@@ -1,15 +1,15 @@
-from helpers import  date_generator, ID_generator, custom_input_value
+from helpers import  date_generator, ID_generator, str_input, int_input, float_input
 
 # Inventory managament
 
 def register_product (products_list):
         product_info = {
                     "book_ID" : ID_generator(),
-                    "book_title" : custom_input_value(str,"Book title: "),
-                    "book_author" : custom_input_value(str,"Book author: "),
-                    "book_category" : custom_input_value(str,"Book category: "),
-                    "book_price" : custom_input_value(float,"Book price: "),
-                    "book_stock" : custom_input_value(int,"Book stock: "),
+                    "book_title" : str_input("Book title: "),
+                    "book_author" : str_input("Book author: "),
+                    "book_category" : str_input("Book category: "),
+                    "book_price" : float_input("Book price: "),
+                    "book_stock" : int_input("Book stock: "),
                 }
         products_list.append(product_info)
 
@@ -17,14 +17,14 @@ def show_products_inventory (products_list):
     print(f"Inventory stock:\n{products_list}")
 
 def search_product_by_name (products_list):
-    search_book = custom_input_value(str,"product to search by book title: ")
+    search_book = str_input("product to search by book title: ")
     for product in products_list:
         if search_book == product["book_title"]:
             print(f"Product found:\n{product}")
             return product
 
 def search_product_by_ID (products_list):
-    search_book = custom_input_value(str,"Register the Book ID: ")
+    search_book = str_input("Register the Book ID: ")
     for product in products_list:
         if search_book == product["book_ID"]:
             print(f"Product found:\n{product}")
@@ -33,9 +33,8 @@ def search_product_by_ID (products_list):
 def update_product (products_list):
     product_to_update = search_product_by_name(products_list)
     for product in products_list:
-        print(product)
         if product_to_update["book_title"] == product["book_title"]:
-            new_name = custom_input_value(str,"New title for this book: ")
+            new_name = str_input("New title for this book: ")
             product["book_title"] = new_name
             return product
 
@@ -51,14 +50,15 @@ def delete_product (products_list):
 
 def register_sale (sales_list,products_list):
     product_to_sale = search_product_by_name(products_list)
-    product_quantity = custom_input_value(int,"Enter the product quantity to sell: ")
+    product_quantity = int_input("Enter the product quantity to sell: ")
     total_price = product_quantity * product_to_sale["book_price"]
+    print(total_price)
     if product_to_sale["book_stock"] < product_quantity:
         return print(f'{product_to_sale["book_title"]} stock insuficient, there are just {product_to_sale["book_stock"]} books of them')
     
     sale_info = {
                 "sale_ID" : ID_generator(),
-                "user_ID" : custom_input_value(str,"Enter user ID: "),
+                "user_ID" : str_input("Enter user ID: "),
                 "ID_book" : product_to_sale["book_ID"],
                 "quantity_product" : product_quantity,
                 "date" : date_generator(),
@@ -85,7 +85,7 @@ def products_best_seller (sales_list):
             }
     return best_seller
 
-def products_major_sales_by_author (sales_list):
+def products_major_sales_by_author (sales_list,products_list):
     best_sell = products_best_seller(sales_list)
     print(best_sell)
     book_info = search_product_by_ID(products_list)
